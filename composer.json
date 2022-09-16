@@ -25,5 +25,7 @@
 		"psr-4": {
 			"Pikselin\\Filelist\\": "src/"
 		}
-	}
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
 }
