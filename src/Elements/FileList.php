@@ -4,15 +4,14 @@ namespace Pikselin\FileList\Elemental;
 
 use Bummzack\SortableFile\Forms\SortableUploadField;
 use DNADesign\Elemental\Models\BaseElement;
-use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\File;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\GridField\GridField;
-use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\FieldType\DBHTMLText;
-use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 
+/**
+ * Elemental block that allows for a list of files that can be easily sortable via the admin.
+ */
 class FileList extends BaseElement
 {
     private static $singular_name = 'File list';
@@ -38,35 +37,20 @@ class FileList extends BaseElement
 
     public function getCMSFields()
     {
-//        $fields = parent::getCMSFields();
-
-//        $fields->removeByName('Files');
-//
-//        $fields->addFieldToTab(
-//            'Root.Main',
-//            UploadField::create('Files', 'Files')
-////                ->setAllowedExtensions(['doc', 'docx','xls', 'xlsx', ''pdf'])
-//                ->setAllowedFileCategories('document')
-//                ->setIsMultiUpload(TRUE)
-//                ->setFolderName('ElementalFiles')
-//        );
-
+        // SortableUploadField has to be in beforeUpdateCMSFields
         $this->beforeUpdateCMSFields(function (FieldList $fields) {
-        $fields->addFieldToTab('Root.Main', $filesField = SortableUploadField::create(
-            'Files', $this->fieldLabel('Files')
-        ));
-        $filesField->setAllowedFileCategories('document')
-            ->setFolderName('ElementalFiles');
+            // removes the Files tab
+            $fields->removeByName('Files');
+
+            // Sortable upload field
+            $fields->addFieldToTab('Root.Main', $filesField = SortableUploadField::create(
+                'Files', $this->fieldLabel('Files')
+            ));
+            $filesField->setAllowedFileCategories('document')
+                ->setFolderName('ElementalFiles');
         });
 
-//        $linksConfig = GridFieldConfig_RelationEditor::create();
-//        // allow for drag and drop
-//        $linksConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
-//        $linksGridField = GridField::create('Files', 'Files', $this->Files(), $linksConfig);
-//        $fields->addFieldToTab('Root.Main', $linksGridField);
-
         return parent::getCMSFields();
-        return $fields;
     }
 
     public function getType()
@@ -82,7 +66,7 @@ class FileList extends BaseElement
     public function FileList()
     {
         return $this->Files()
-            ->sort('Sort');
+            ->sort('SortOrder');
     }
 
     /**
@@ -115,7 +99,7 @@ class FileList extends BaseElement
     }
 
     /**
-     * Format our file size for the template
+     * Format our file size for the template.
      *
      * @param $size
      *
