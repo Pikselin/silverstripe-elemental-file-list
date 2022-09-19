@@ -1,0 +1,7 @@
+---
+Name: file-list-extensions
+---
+# Adds css requirement directive
+PageController:
+  extensions:
+    - Pikselin\FileList\Extensions\FileListControllerExtension
