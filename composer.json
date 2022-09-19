@@ -1,7 +1,7 @@
 {
 	"name": "pikselin/silverstripe-elemental-file-list",
 	"description": "Block for a list of files",
-	"type": "silverstripe-module",
+	"type": "silverstripe-vendormodule",
 	"authors": [
 		{
 			"name": "Pikselin",
