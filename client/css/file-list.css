@@ -2,37 +2,40 @@
  * Override these styles in your own Stylesheet.
  **/
 
-.download {
+.pikselin__filelist__elemental__filelist {
+    padding-bottom: 2rem;
+}
+
+.pikselin__filelist__elemental__filelist .download {
     border-top: 0.0625rem solid #dee2e6;
     display: flex;
     padding: 1.1875rem 0 1.25rem;
 }
 
-.download:last-child {
+.pikselin__filelist__elemental__filelist .download:last-child {
     border-bottom: 0.0625rem solid #dee2e6;
-    margin-bottom: 2rem;
 }
 
-.download__icon {
+.pikselin__filelist__elemental__filelist .download__icon {
     flex-basis: 3.5rem;
     margin-top: 0.375rem;
     margin-left: 1rem;
 }
 
-.download-svg {
+.pikselin__filelist__elemental__filelist .download-svg {
     fill: #0f3f61;
     width: 2.1rem;
     height: 2.1rem;
 }
 
-.download__title {
+.pikselin__filelist__elemental__filelist .download__title {
     display: block;
     font-size: 1.125rem;
     font-weight: 700;
     line-height: 1.3333333333;
 }
 
-.download__filemeta {
+.pikselin__filelist__elemental__filelist .download__filemeta {
     color: #000;
     display: block;
     font-size: 1rem;
