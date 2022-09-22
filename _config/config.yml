@@ -1,0 +1,15 @@
+---
+Name: file-list-config
+---
+# you can also configure the 'icon_extension_mapping', which lists out what icon each file extension should display.
+Pikselin\FileList\Elemental\FileList:
+  # By default, all documents are allowed, but you can optionally limit file extensions allowed
+#  allowed_extensions:
+#    - 'pdf'
+#    - 'doc'
+  # where the uploaded files should go by default
+  folder_name: 'ElementalFiles'
+  # icon display type:
+  # if set to true, the same download icon will be displayed for all file, otherwise icon is based on the file extension.
+  simple_icon_display: true
+

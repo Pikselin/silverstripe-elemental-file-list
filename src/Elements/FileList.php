@@ -5,6 +5,7 @@ namespace Pikselin\FileList\Elemental;
 use Bummzack\SortableFile\Forms\SortableUploadField;
 use DNADesign\Elemental\Models\BaseElement;
 use SilverStripe\Assets\File;
+use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\FieldType\DBHTMLText;
@@ -14,6 +15,8 @@ use SilverStripe\ORM\FieldType\DBHTMLText;
  */
 class FileList extends BaseElement
 {
+    use Configurable;
+
     private static $singular_name = 'File list';
     private static $plural_name = 'File list';
     private static $description = 'list of internal files';
@@ -35,6 +38,26 @@ class FileList extends BaseElement
         ],
     ];
 
+    /**
+     * Maps out what icon each file extension should display
+     *
+     * @var string[]
+     */
+    private static $icon_extension_mapping = [
+        'xlsx' => 'csv',
+        'xls' => 'csv',
+        'csv' => 'csv',
+        'doc' => 'word',
+        'docx' => 'word',
+        'txt' => 'word',
+        'ppt' => 'powerpoint',
+        'pptx' => 'powerpoint',
+        'pdf' => 'pdf',
+        'video' => 'video',
+        'webpage' => 'webpage',
+        'external' => 'external',
+    ];
+
     public function getCMSFields()
     {
         // SortableUploadField has to be in beforeUpdateCMSFields
@@ -47,7 +70,12 @@ class FileList extends BaseElement
                 'Files', $this->fieldLabel('Files')
             ));
             $filesField->setAllowedFileCategories('document')
-                ->setFolderName('ElementalFiles');
+                ->setFolderName($this->config()->get('folder_name'));
+
+            // check config to see if specific file types have been set
+            if ($this->getAllowedFileTypes()) {
+                $filesField->setAllowedExtensions($this->getAllowedFileTypes());
+            }
         });
 
         return parent::getCMSFields();
@@ -113,5 +141,55 @@ class FileList extends BaseElement
         $tidySize = str_ireplace('kb', 'kB', $tidySize);
 
         return $tidySize;
+    }
+
+    /**
+     * Grab the allowed file types from config.
+     * No fallback needed because setAllowedFileCategories('document') is already set.
+     *
+     * @return mixed|string[]
+     */
+    public function getAllowedFileTypes()
+    {
+        if (!empty($this->config()->get("allowed_extensions"))) {
+            $types = $this->config()->get("allowed_extensions");
+            $types = array_unique($types);
+            return $types;
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine the icons display from config.
+     *
+     * @return mixed
+     */
+    public function SimpleIconDisplay()
+    {
+        return $this->config()->get('simple_icon_display');
+    }
+
+    /**
+     * Grab the icon name to display for the given file extension, via the icon_extension_mapping array.
+     *
+     * @param $extension
+     * @return string
+     */
+    public function DownloadIcon($extension)
+    {
+        // lowercase it, for easier string matching
+        $extension = trim(strtolower($extension));
+
+        // we've got various doctypes that relate to icons with different names, so...
+        $mapping = $this->config()->get('icon_extension_mapping');
+
+        // are we one of those mapping types?
+        if (isset($mapping[$extension])) {
+            return strtolower($mapping[$extension]);
+        } else {
+            // otherwise send back the default icon
+            return 'webpage';
+        }
     }
 }
