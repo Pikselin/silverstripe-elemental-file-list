@@ -15,10 +15,9 @@
 		"files"
 	],
 	"require": {
-		"silverstripe/cms": "^4",
-		"silverstripe/framework": "^4",
-		"dnadesign/silverstripe-elemental": "^4",
-		"bummzack/sortablefile": "^2"
+		"silverstripe/cms": "^4 || ^5",
+		"dnadesign/silverstripe-elemental": "^4 || ^ 5",
+		"bummzack/sortablefile": "dev-master"
 	},
 	"license": "The MIT License (MIT)",
 	"autoload": {
