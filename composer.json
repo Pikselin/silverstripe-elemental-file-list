@@ -16,7 +16,7 @@
 	],
 	"require": {
 		"silverstripe/cms": "^4 || ^5",
-		"dnadesign/silverstripe-elemental": "^4 || ^ 5",
+		"dnadesign/silverstripe-elemental": "^4 || ^5",
 		"bummzack/sortablefile": "dev-master"
 	},
 	"license": "The MIT License (MIT)",
