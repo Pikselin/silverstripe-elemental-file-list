@@ -29,3 +29,5 @@ Base styles can be found in:
 - This module already activates the CSS files in the PageController via the `FileListControllerExtension.php` extension.
 - To add more file extension icons, make sure to update the mapping in `FileList.php` (or via the yml file) and add
 the svg to the sprite in the images folder.
+
+## test
