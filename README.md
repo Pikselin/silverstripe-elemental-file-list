@@ -9,7 +9,7 @@ Features:
 - includes an extension for the controller that does the requirements call for the CSS.
 
 ## Installation
-This module only works with SilverStripe 4.x.
+This module only works with SilverStripe 6.x.
 
 `composer require pikselin/silverstripe-elemental-file-list`
 
